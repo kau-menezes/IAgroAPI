@@ -16,6 +16,10 @@ COPY . .
 WORKDIR "/src/IAgro.Api"
 RUN dotnet build "IAgro.Api.csproj" -c Debug -o /app/build
 
+RUN dotnet tool install --global dotnet-ef \
+    && export PATH="$PATH:/root/.dotnet/tools" \
+    && dotnet ef database update --project ../IAgro.Persistence --startup-project . --no-build
+
 FROM build AS publish
 
 RUN dotnet publish "IAgro.Api.csproj" -c Debug -o /app/publish
