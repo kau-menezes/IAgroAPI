@@ -4,6 +4,7 @@ using IAgro.Application;
 using IAgro.Application.Config;
 using IAgro.Persistence;
 using IAgro.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 DotEnv.Load();
 
@@ -34,6 +35,7 @@ var dataContext = serviceScope.ServiceProvider.GetService<IAgroContext>()
     ?? throw new InvalidOperationException("Failed to resolve AlmoxContext from service provider.");
 
 dataContext.Database.EnsureCreated();
+await dataContext.Database.MigrateAsync();
 
 app.UseSwagger();
 app.UseSwaggerUI();
