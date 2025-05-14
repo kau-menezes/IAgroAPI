@@ -35,7 +35,6 @@ var dataContext = serviceScope.ServiceProvider.GetService<IAgroContext>()
     ?? throw new InvalidOperationException("Failed to resolve AlmoxContext from service provider.");
 
 dataContext.Database.EnsureCreated();
-await dataContext.Database.MigrateAsync();
 
 app.UseSwagger();
 app.UseSwaggerUI();
