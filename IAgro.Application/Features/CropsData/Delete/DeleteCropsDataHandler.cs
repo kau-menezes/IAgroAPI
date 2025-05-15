@@ -4,26 +4,26 @@ using IAgro.Application.Repository.CropsDataRepository;
 using IAgro.Domain.Models;
 using MediatR;
 
-namespace IAgro.Application.Features.CropsData.Create;
+namespace IAgro.Application.Features.CropsData.Delete;
 
-public class CreateCropDataHandler(
+public class DeleteCropDataHandler(
     ICropsDataRepository cropsRepository,
     IUnitOfWork unitOfWork,
     IMapper mapper
-) : IRequestHandler<CreateCropDataRequest, CreateCropDataResponse>
+) : IRequestHandler<DeleteCropDataRequest, DeleteCropDataResponse>
 {
     private readonly ICropsDataRepository cropsRepository = cropsRepository;
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IMapper mapper = mapper;
     
-    public async Task<CreateCropDataResponse> Handle(CreateCropDataRequest request, CancellationToken cancellationToken)
+    public async Task<DeleteCropDataResponse> Handle(DeleteCropDataRequest request, CancellationToken cancellationToken)
     {
         var cropData = mapper.Map<CropData>(request);
-
-        cropsRepository.Create(cropData);
+        if (!await cropsRepository.Exists(cropData.Id, cancellationToken))
+            cropsRepository.Delete(cropData);
 
         await unitOfWork.Save(cancellationToken);
 
-        return mapper.Map<CreateCropDataResponse>(cropData);
+        return mapper.Map<DeleteCropDataResponse>(cropData);
     }
 }
