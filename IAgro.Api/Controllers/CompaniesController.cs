@@ -1,5 +1,7 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Companies.Create;
+using IAgro.Application.Features.Companies.Delete;
+using IAgro.Application.Features.Companies.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,5 +19,21 @@ public class CompaniesController(IMediator mediator) : ControllerBase
     {
         var response = await mediator.Send(request, cancellationToken);
         return Created(APIRoutes.Companies, response);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult<UpdateCompanyResponse>> Update(
+        UpdateCompanyRequest request, CancellationToken cancellationToken
+    ) {
+        var response = await mediator.Send(request, cancellationToken);
+        return Accepted(APIRoutes.Companies, response);
+    }
+
+    [HttpDelete]
+    public async Task<ActionResult<DeleteCompanyResponse>> Delete(
+        DeleteCompanyRequest request, CancellationToken cancellationToken
+    ) {
+        var response = await mediator.Send(request, cancellationToken);
+        return Accepted(APIRoutes.Companies, response);
     }
 }
