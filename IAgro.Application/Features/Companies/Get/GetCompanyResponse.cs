@@ -1,12 +1,12 @@
 using IAgro.Domain.Models;
 
-namespace IAgro.Application.Features.Companies.Delete;
+namespace IAgro.Application.Features.Companies.Get;
 
-public sealed record DeleteCompanyResponse(
+public sealed record GetCompanyResponse(
     Guid Id,
     DateTime CreatedAt,
     DateTime UpdatedAt,
-    DateTime DeletedAt,
+    DateTime? DeletedAt,
     string Name,
     string CNPJ,
     string Country,

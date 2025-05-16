@@ -22,5 +22,22 @@ public static class CompanyTableExtensions
                 .IsRequired();
             entity.HasIndex(c => c.Name)
                 .IsUnique();
+
+            entity.Property(c => c.CNPJ)
+                .HasColumnName("cnpj")
+                .HasColumnType("varchar(14)")
+                .IsRequired();
+            entity.HasIndex(c => c.CNPJ)
+                .IsUnique();
+            
+            entity.Property(c => c.Country)
+                .HasColumnName("country")
+                .HasColumnType("varchar(35)")
+                .IsRequired();
+            
+            entity.Property(c => c.TimeZone)
+                .HasColumnName("time_zone")
+                .HasColumnType("varchar(35)")
+                .IsRequired();
         });
 }

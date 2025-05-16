@@ -8,5 +8,8 @@ public sealed record UpdateCompanyResponse(
     DateTime UpdatedAt,
     DateTime? DeletedAt,
     string Name,
+    string CNPJ,
+    string Country,
+    string TimeZone,
     List<CropData> CropsData
 );
