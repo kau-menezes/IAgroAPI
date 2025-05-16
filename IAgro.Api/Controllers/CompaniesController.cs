@@ -21,7 +21,7 @@ public class CompaniesController(IMediator mediator) : ControllerBase
         return Created(APIRoutes.Companies, response);
     }
 
-    [HttpPut]
+    [HttpPatch]
     public async Task<ActionResult<UpdateCompanyResponse>> Update(
         UpdateCompanyRequest request, CancellationToken cancellationToken
     ) {

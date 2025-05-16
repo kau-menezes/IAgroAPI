@@ -21,7 +21,7 @@ public class CropsDataController(IMediator mediator) : ControllerBase
         return Created(APIRoutes.CropsData, response);
     }
 
-    [HttpPut]
+    [HttpPatch]
     public async Task<ActionResult<UpdateCropDataResponse>> Update(
         UpdateCropDataRequest request, CancellationToken cancellationToken
     ) {
