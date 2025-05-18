@@ -1,6 +1,8 @@
 using AutoMapper;
+using IAgro.Application.Common.Exceptions;
 using IAgro.Application.Repositories;
 using IAgro.Application.Repositories.CompaniesRepository;
+using IAgro.Domain.Common.Messages;
 using IAgro.Domain.Models;
 using MediatR;
 
@@ -19,7 +21,15 @@ public class UpdateCompanyHandler(
     public async Task<UpdateCompanyResponse> Handle(
         UpdateCompanyRequest request, CancellationToken cancellationToken)
     {
-        var company = mapper.Map<Company>(request);
+        var company = await companiesRepository.Get(request.CompanyId, cancellationToken)
+            ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
+
+        if (request.Props.Name is string name)
+            company.Name = name;
+        if (request.Props.CNPJ is string cnpj)
+            company.CNPJ = cnpj;
+        if (request.Props.Country is string country)
+            company.Country = country;
 
         companiesRepository.Update(company);
 

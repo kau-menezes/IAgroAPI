@@ -7,7 +7,7 @@ public class UpdateCompanyMapper : Profile
 {
     public UpdateCompanyMapper()
     {
-        CreateMap<UpdateCompanyRequest, Company>();
+        CreateMap<UpdateCompanyRequestProps, Company>();
         CreateMap<Company, UpdateCompanyResponse>();
     }
 }
