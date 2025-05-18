@@ -44,6 +44,7 @@ var dataContext = serviceScope.ServiceProvider.GetService<IAgroContext>()
 dataContext.Database.EnsureCreated();
 await dataContext.SeedData();
 
+app.UseMiddleware<AuthenticateMiddleware>();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors();
