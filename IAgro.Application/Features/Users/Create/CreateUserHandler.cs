@@ -29,11 +29,17 @@ public class CreateUserHandler(
     {
         var session = requestSession.GetSessionOrThrow();
 
-        if (request.Role != UserRole.Reader && !session.IsAdmin)
-            throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
-
-        if (session.Role != UserRole.Manager)
-            throw new ForbiddenException(ExceptionMessages.Forbidden.Role);
+        switch (session.Role)
+        {
+            case UserRole.Reader:
+                throw new ForbiddenException(ExceptionMessages.Forbidden.Role);
+            case UserRole.Manager:
+                if (request.Role == UserRole.Admin || request.CompanyId != session.UserCompanyId)
+                    throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
+                break;
+            case UserRole.Admin:
+                break;
+        }
 
         var user = mapper.Map<User>(request);
         user.Password = passwordHasher.Hash(user);
