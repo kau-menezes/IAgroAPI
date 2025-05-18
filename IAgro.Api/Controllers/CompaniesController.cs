@@ -23,35 +23,40 @@ public class CompaniesController(IMediator mediator) : ControllerBase
         return Created(APIRoutes.Companies, response);
     }
 
-    [HttpPatch]
+    [HttpPatch, Route("{companyId}")]
     public async Task<ActionResult<UpdateCompanyResponse>> Update(
-        UpdateCompanyRequest request, CancellationToken cancellationToken
+        [FromRoute] Guid companyId,
+        UpdateCompanyRequestProps props,
+        CancellationToken cancellationToken
     ) {
+        var request = new UpdateCompanyRequest(companyId, props);
         var response = await mediator.Send(request, cancellationToken);
-        return Accepted(APIRoutes.Companies, response);
+        return Ok(response);
     }
 
-    [HttpDelete]
+    [HttpDelete, Route("{companyId}")]
     public async Task<ActionResult<DeleteCompanyResponse>> Delete(
-        DeleteCompanyRequest request, CancellationToken cancellationToken
+        [FromRoute] Guid companyId, CancellationToken cancellationToken
     ) {
-        var response = await mediator.Send(request, cancellationToken);
-        return Accepted(APIRoutes.Companies, response);
+        var request = new DeleteCompanyRequest(companyId);
+        await mediator.Send(request, cancellationToken);
+        return NoContent();
     }
 
-    [HttpGet]
+    [HttpGet, Route("{companyId}")]
     public async Task<ActionResult<GetCompanyResponse>> Get(
-        GetCompanyRequest request, CancellationToken cancellationToken
-    ) {
+        [FromRoute] Guid companyId, CancellationToken cancellationToken)
+    {
+        var request = new GetCompanyRequest(companyId);
         var response = await mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 
     [HttpGet]
-    public async Task<ActionResult<GetAllCompanyResponse>> GetAll(
-        GetAllCompanyRequest request, CancellationToken cancellationToken
-    ) {
-        var response = await mediator.Send(request, cancellationToken);
+    public async Task<ActionResult<GetAllCompaniesResponse>> GetAll(
+        CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(new GetAllCompaniesRequest(), cancellationToken);
         return Ok(response);
     }
 }
