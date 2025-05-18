@@ -5,5 +5,7 @@ public sealed record CreateCompanyResponse(
     DateTime CreatedAt,
     DateTime UpdatedAt,
     DateTime? DeletedAt,
-    string Name
+    string Name,
+    string CNPJ,
+    string Country
 );

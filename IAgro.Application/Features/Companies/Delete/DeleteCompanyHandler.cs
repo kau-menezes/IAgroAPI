@@ -1,33 +1,37 @@
-using AutoMapper;
 using IAgro.Application.Common.Exceptions;
-using IAgro.Application.Repository;
-using IAgro.Application.Repository.CompaniesRepository;
-using IAgro.Domain.Common.Enums;
+using IAgro.Application.Common.Session;
+using IAgro.Application.Repositories;
+using IAgro.Application.Repositories.CompaniesRepository;
 using IAgro.Domain.Common.Messages;
-using IAgro.Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace IAgro.Application.Features.Companies.Delete;
 
 public class DeleteCompanyHandler(
     ICompaniesRepository companiesRepository,
-    IUnitOfWork unitOfWork,
-    IMapper mapper
+    IRequestSession requestSession,
+    IUnitOfWork unitOfWork
 ) : IRequestHandler<DeleteCompanyRequest, DeleteCompanyResponse>
 {
     private readonly ICompaniesRepository companiesRepository = companiesRepository;
+    private readonly IRequestSession requestSession = requestSession;
     private readonly IUnitOfWork unitOfWork = unitOfWork;
-    private readonly IMapper mapper = mapper;
     
-    public async Task<DeleteCompanyResponse> Handle(DeleteCompanyRequest request, CancellationToken cancellationToken)
+    public async Task<DeleteCompanyResponse> Handle(
+        DeleteCompanyRequest request, CancellationToken cancellationToken)
     {
-        var company = mapper.Map<Company>(request);
-        if (await companiesRepository.Exists(company.Id, cancellationToken))
-            companiesRepository.Delete(company);
+        var sessionData = requestSession.GetSessionOrThrow();
+
+        if(!sessionData.IsAdmin)
+            throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
+
+        var company = await companiesRepository.Get(request.Id, cancellationToken)
+            ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
+
+        companiesRepository.Delete(company);
 
         await unitOfWork.Save(cancellationToken);
 
-        return mapper.Map<DeleteCompanyResponse>(company);
+        return new DeleteCompanyResponse();
     }
 }

@@ -2,11 +2,10 @@ namespace IAgro.Application.Features.Companies.GetAll;
 using IAgro.Domain.Models;
 using AutoMapper;
 
-public class GetAllCompanyMapper : Profile
+public class GetAllCompaniesMapper : Profile
 {
-    public GetAllCompanyMapper()
+    public GetAllCompaniesMapper()
     {
-        CreateMap<GetAllCompanyRequest, Company>();
-        CreateMap<Company, GetAllCompanyResponse>();
+        CreateMap<Company, GetAllCompaniesResponse>();
     }
 }

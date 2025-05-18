@@ -1,6 +1,6 @@
 using AutoMapper;
-using IAgro.Application.Repository;
-using IAgro.Application.Repository.CompaniesRepository;
+using IAgro.Application.Repositories;
+using IAgro.Application.Repositories.CompaniesRepository;
 using IAgro.Domain.Models;
 using MediatR;
 
@@ -16,7 +16,8 @@ public class UpdateCompanyHandler(
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IMapper mapper = mapper;
     
-    public async Task<UpdateCompanyResponse> Handle(UpdateCompanyRequest request, CancellationToken cancellationToken)
+    public async Task<UpdateCompanyResponse> Handle(
+        UpdateCompanyRequest request, CancellationToken cancellationToken)
     {
         var company = mapper.Map<Company>(request);
 

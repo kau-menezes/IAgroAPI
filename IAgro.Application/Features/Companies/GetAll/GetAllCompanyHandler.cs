@@ -1,24 +1,32 @@
 using AutoMapper;
-using IAgro.Application.Repository;
-using IAgro.Application.Repository.CompaniesRepository;
 using MediatR;
+using IAgro.Application.Repositories.CompaniesRepository;
+using IAgro.Application.Common.Session;
+using IAgro.Application.Common.Exceptions;
+using IAgro.Domain.Common.Messages;
 
 namespace IAgro.Application.Features.Companies.GetAll;
 
-public class GetAllCompanyHandler(
+public class GetAllCompaniesHandler(
     ICompaniesRepository companiesRepository,
-    IUnitOfWork unitOfWork,
+    IRequestSession requestSession,
     IMapper mapper
-) : IRequestHandler<GetAllCompanyRequest, GetAllCompanyResponse>
+) : IRequestHandler<GetAllCompaniesRequest, List<GetAllCompaniesResponse>>
 {
     private readonly ICompaniesRepository companiesRepository = companiesRepository;
-    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IRequestSession requestSession = requestSession;
     private readonly IMapper mapper = mapper;
 
-    public async Task<GetAllCompanyResponse> Handle(GetAllCompanyRequest request, CancellationToken cancellationToken)
+    public async Task<List<GetAllCompaniesResponse>> Handle(
+        GetAllCompaniesRequest request, CancellationToken cancellationToken)
     {
+        var session = requestSession.GetSessionOrThrow();
+
+        if(!session.IsAdmin)
+            throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
+
         var companies = await companiesRepository.GetAll(cancellationToken);
 
-        return mapper.Map<GetAllCompanyResponse>(companies);
+        return mapper.Map<List<GetAllCompaniesResponse>>(companies);
     }
 }

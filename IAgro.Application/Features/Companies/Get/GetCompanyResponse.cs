@@ -10,6 +10,5 @@ public sealed record GetCompanyResponse(
     string Name,
     string CNPJ,
     string Country,
-    string TimeZone,
-    List<CropData> CropsData
+    List<Field> Fields
 );

@@ -1,7 +1,11 @@
 namespace IAgro.Application.Features.Companies.GetAll;
 
-using IAgro.Application.Features.Companies.Get;
-
-public sealed record GetAllCompanyResponse(
-    List<GetCompanyResponse> Companies
+public sealed record GetAllCompaniesResponse(
+    Guid Id,
+    DateTime CreatedAt,
+    DateTime UpdatedAt,
+    DateTime? DeletedAt,
+    string Name,
+    string CNPJ,
+    string Country
 );
