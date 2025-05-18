@@ -2,6 +2,7 @@ namespace IAgro.API.Enums;
 
 public static class APIRoutes
 {
+    public const string Auth = "api/auth";
     public const string Companies = "api/companies";
-    public const string CropsData = "api/crops-data";
+    public const string Users = "api/users";
 }
