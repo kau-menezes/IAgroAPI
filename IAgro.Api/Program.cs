@@ -6,6 +6,9 @@ using IAgro.Application;
 using IAgro.Persistence;
 using IAgro.Persistence.Seeding;
 using IAgro.Persistence.Context;
+using IAgro.Application.Common.Session;
+using IAgro.Application.Contracts;
+using IAgro.API.Services;
 
 DotEnv.Load();
 
@@ -23,6 +26,10 @@ builder.Services
         .Converters
         .Add(new JsonStringEnumConverter())
     );
+
+builder.Services.AddScoped<IRequestSession, RequestSession>();
+builder.Services.AddScoped<IAuthenticator, AuthenticationService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordEncrypterService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
