@@ -11,10 +11,6 @@ public static class CompanyTableExtensions
             entity.ToTable("companies");
 
             entity.ConfigureBaseTableProps();
-
-            entity.HasMany(c => c.CropsData)
-                .WithOne(cd => cd.Company)
-                .HasForeignKey(cd => cd.CompanyId);
             
             entity.Property(c => c.Name)
                 .HasColumnName("name")
@@ -32,11 +28,6 @@ public static class CompanyTableExtensions
             
             entity.Property(c => c.Country)
                 .HasColumnName("country")
-                .HasColumnType("varchar(35)")
-                .IsRequired();
-            
-            entity.Property(c => c.TimeZone)
-                .HasColumnName("time_zone")
                 .HasColumnType("varchar(35)")
                 .IsRequired();
         });
