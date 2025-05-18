@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using IAgro.Persistence.Context;
-using IAgro.Application.Repository;
+using IAgro.Application.Repositories;
 using IAgro.Domain.Models;
 
 namespace IAgro.Persistence.Repositories;

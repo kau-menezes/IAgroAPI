@@ -1,4 +1,4 @@
-using IAgro.Application.Repository;
+using IAgro.Application.Repositories;
 using IAgro.Persistence.Context;
 
 namespace IAgro.Persistence.Repositories;
