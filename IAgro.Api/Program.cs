@@ -1,10 +1,11 @@
 using System.Text.Json.Serialization;
-using IAgro.API.Extensions;
+using IAgro.API.Config;
+using IAgro.API.Middlewares;
+using IAgro.API.Security;
 using IAgro.Application;
-using IAgro.Application.Config;
 using IAgro.Persistence;
+using IAgro.Persistence.Seeding;
 using IAgro.Persistence.Context;
-using Microsoft.EntityFrameworkCore;
 
 DotEnv.Load();
 
@@ -27,7 +28,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-
 var app = builder.Build();
 
 var serviceScope = app.Services.CreateScope();
@@ -35,10 +35,11 @@ var dataContext = serviceScope.ServiceProvider.GetService<IAgroContext>()
     ?? throw new InvalidOperationException("Failed to resolve AlmoxContext from service provider.");
 
 dataContext.Database.EnsureCreated();
+await dataContext.SeedData();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors();
-app.UserErrorHandler();
+app.UseErrorHandler();
 app.MapControllers();
 app.Run();
