@@ -19,13 +19,12 @@ builder.Services.ConfigureApplication();
 
 builder.Services.ConfigureCorsPolicy();
 
-builder.Services
-    .AddControllers()
-    .AddJsonOptions(options => options
-        .JsonSerializerOptions
-        .Converters
-        .Add(new JsonStringEnumConverter())
-    );
+builder.Services.AddControllers()
+    .AddJsonOptions(op =>
+    {
+        op.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Services.AddScoped<IRequestSession, RequestSession>();
 builder.Services.AddScoped<IAuthenticator, AuthenticationService>();
