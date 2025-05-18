@@ -20,13 +20,13 @@ public class BaseRepository<TModel>(IAgroContext IAgroContext) : IBaseRepository
         context.Update(entity);
     }
 
-    public Task<TModel?> Get(Guid id, CancellationToken cancellationToken)
+    public virtual Task<TModel?> Get(Guid id, CancellationToken cancellationToken)
         => context
             .Set<TModel>()
             .Where(entity => entity.DeletedAt == null)
             .FirstOrDefaultAsync(entity => entity.Id == id, cancellationToken);
 
-    public Task<List<TModel>> GetAll(CancellationToken cancellationToken)
+    public virtual Task<List<TModel>> GetAll(CancellationToken cancellationToken)
         => context
             .Set<TModel>()
             .Where(entity => entity.DeletedAt == null)

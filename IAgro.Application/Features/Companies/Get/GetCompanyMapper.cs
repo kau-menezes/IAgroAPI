@@ -8,5 +8,6 @@ public class GetCompanyMapper : Profile
     public GetCompanyMapper()
     {
         CreateMap<Company, GetCompanyResponse>();
+        CreateMap<User, GetCompanyUserPresenter>();
     }
 }
