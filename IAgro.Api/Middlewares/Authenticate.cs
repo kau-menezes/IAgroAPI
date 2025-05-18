@@ -41,10 +41,10 @@ public class AuthenticateMiddleware(RequestDelegate next)
 
             await _next(context);
         }
-        catch
+        catch(Exception e)
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            string message = JsonSerializer.Serialize(new { message = ExceptionMessages.Unauthorized.Token });
+            string message = JsonSerializer.Serialize(new { message = e.Message });
             await context.Response.WriteAsync(message);
         }
     }
