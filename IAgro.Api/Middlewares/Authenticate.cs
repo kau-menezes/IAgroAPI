@@ -15,10 +15,16 @@ public class AuthenticateMiddleware(RequestDelegate next)
 
         var authHeader = context.Request.Headers.Authorization.FirstOrDefault();
 
-        if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+        if (string.IsNullOrEmpty(authHeader))
+        {
+            await _next(context);
+            return;
+        }
+
+        if (!authHeader.StartsWith("Bearer "))
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-            string message = JsonSerializer.Serialize(new { message = ExceptionMessages.Unauthorized.MissingToken });
+            string message = JsonSerializer.Serialize(new { message = ExceptionMessages.Unauthorized.TokenPrefix });
             await context.Response.WriteAsync(message);
             return;
         }
