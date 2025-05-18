@@ -21,6 +21,7 @@ public static class ExceptionMessages
     {
         public const string Default = "Forbidden.";
         public const string Admin = "You dot not own enough permission. You must be an admin to perform this.";
+        public const string Role = "You don't have the proper role to perform this action.";
         public const string NotOwnUser = "You must reference a object owned by you to perform this.";
         public const string NotOwnUserNorAdmin = "You must reference a object owned by you or be an admin to perform this.";
     }
@@ -28,11 +29,12 @@ public static class ExceptionMessages
     public static class NotFound
     {
         public const string Default = "Not Found.";
+        public const string Company = "Company not found.";
+        public const string CropDisease = "Cropd disease not found.";
+        public const string Device = "Device not found.";
+        public const string Field = "Field not found.";
+        public const string FieldScan = "Field scan not found.";
         public const string User = "User not found.";
-        public const string Category = "Category not found.";
-        public const string Department = "Department not found.";
-        public const string Item = "Item not found.";
-        public const string Request = "Request not found.";
     }
 
     public static class Conflict
