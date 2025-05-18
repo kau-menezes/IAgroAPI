@@ -1,12 +1,17 @@
-
-using IAgro.Application.Config;
-using IAgro.Application.Repository;
-using IAgro.Application.Repository.CompaniesRepository;
-using IAgro.Application.Repository.CropsDataRepository;
+using IAgro.Application.Repositories;
+using IAgro.Application.Repositories.CompaniesRepository;
+using IAgro.Application.Repositories.CropsRepository;
+using IAgro.Application.Repositories.DevicesRepository;
+using IAgro.Application.Repositories.FieldsRepository;
+using IAgro.Application.Repositories.UsersRepository;
+using IAgro.Persistence.Config;
 using IAgro.Persistence.Context;
 using IAgro.Persistence.Repositories;
 using IAgro.Persistence.Repositories.Companies;
-using IAgro.Persistence.Repositories.CropsData;
+using IAgro.Persistence.Repositories.Crops;
+using IAgro.Persistence.Repositories.Devices;
+using IAgro.Persistence.Repositories.Fields;
+using IAgro.Persistence.Repositories.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,10 +23,16 @@ public static class ServiceExtensions
     {
         var connection = DotEnv.Get("DATABASE_URL");
 
-        services.AddDbContext<IAgroContext>(opt => opt.UseNpgsql(connection));
+        services.AddDbContext<IAgroContext>(opt => opt.UseNpgsql(connection,
+            o => o.UseNetTopologySuite()));
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<ICompaniesRepository, CompaniesRepository>();
-        services.AddScoped<ICropsDataRepository, CropsDataRepository>();
+        services.AddScoped<ICropDiseasesRepository, CropDiseasesRepository>();
+        services.AddScoped<IDevicesRepository, DevicesRepository>();
+        services.AddScoped<IFieldsRepository, FieldsRepository>();
+        services.AddScoped<IFieldScansRepository, FieldScansRepository>();
+        services.AddScoped<IUsersRepository, UsersRepository>();
     }
 }
