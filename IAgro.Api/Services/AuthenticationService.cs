@@ -21,7 +21,7 @@ public class AuthenticationService : IAuthenticator
     {
         public const string UserId = "sub";
         public const string CompanyId = "company_id";
-        public const string Role = "role";
+        public const string Role = "user_role";
     }
 
     public string GenerateUserToken(User user)
@@ -76,7 +76,7 @@ public class AuthenticationService : IAuthenticator
                 ?? throw new SecurityTokenException("Invalid token: missing company id claim.");
                 
             var role = principal.FindFirst(PayloadKeys.Role)?.Value
-                ?? throw new SecurityTokenException("Invalid token: missing company id claim.");
+                ?? throw new SecurityTokenException("Invalid token: missing user role claim.");
 
             if (!Guid.TryParse(userId, out Guid parsedUserId))
                 throw new SecurityTokenException("Invalid token: user id format.");
@@ -85,7 +85,7 @@ public class AuthenticationService : IAuthenticator
                 throw new SecurityTokenException("Invalid token: company id format.");
 
             if(!Enum.TryParse(role, out UserRole parsedRole))
-                throw new SecurityTokenException("Invalid token: role format.");
+                throw new SecurityTokenException("Invalid token: user role format.");
 
             return new SessionData
             {
