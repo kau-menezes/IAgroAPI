@@ -10,6 +10,10 @@ public class IAgroContext(DbContextOptions<IAgroContext> options) : DbContext(op
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ConfigureCompanyTable();
-        modelBuilder.ConfigureCropDataTable();
+        modelBuilder.ConfigureCropDiseaseTable();
+        modelBuilder.ConfigureDeviceTable();
+        modelBuilder.ConfigureFieldScanTable();
+        modelBuilder.ConfigureFieldTable();
+        modelBuilder.ConfigureUserTable();
     }
 }
