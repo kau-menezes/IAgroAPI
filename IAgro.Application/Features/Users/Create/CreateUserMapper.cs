@@ -3,9 +3,9 @@ using IAgro.Domain.Models;
 
 namespace IAgro.Application.Features.Users.Create;
 
-public class CreateUserMapper : Profile
+public class UpdateUserMapper : Profile
 {
-    public CreateUserMapper()
+    public UpdateUserMapper()
     {
         CreateMap<CreateUserRequest, User>();
         CreateMap<User, CreateUserResponse>();

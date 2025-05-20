@@ -9,7 +9,7 @@ using IAgro.Domain.Common.Messages;
 using IAgro.Domain.Models;
 using MediatR;
 
-namespace IAgro.Application.Features.Users.Create;
+namespace IAgro.Application.Features.Users.Update;
 
 public class UpdateUserHandler(
     IUsersRepository usersRepository,
@@ -17,7 +17,7 @@ public class UpdateUserHandler(
     IRequestSession requestSession,
     IUnitOfWork unitOfWork,
     IMapper mapper
-) : IRequestHandler<CreateUserRequest, CreateUserResponse>
+) : IRequestHandler<UpdateUserRequest, UpdateUserResponse>
 {
     private readonly IUsersRepository usersRepository = usersRepository;
     private readonly IPasswordHasher passwordHasher = passwordHasher;
@@ -25,29 +25,26 @@ public class UpdateUserHandler(
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IMapper mapper = mapper;
 
-    public async Task<CreateUserResponse> Handle(CreateUserRequest request, CancellationToken cancellationToken)
+    public async Task<UpdateUserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
         var session = requestSession.GetSessionOrThrow();
 
-        switch (session.Role)
+        var foundUser = await usersRepository.Get(request.UserId, cancellationToken)
+                    ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
+
+        if (request.Props.Email is string email)
+            foundUser.Email = email;
+
+        if (request.Props.Password is string password)
         {
-            case UserRole.Reader:
-                throw new ForbiddenException(ExceptionMessages.Forbidden.Role);
-            case UserRole.Manager:
-                if (request.Role == UserRole.Admin || request.CompanyId != session.UserCompanyId)
-                    throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
-                break;
-            case UserRole.Admin:
-                break;
+            foundUser.Password = password;
+            foundUser.Password = passwordHasher.Hash(foundUser);
         }
-
-        var user = mapper.Map<User>(request);
-        user.Password = passwordHasher.Hash(user);
-
-        usersRepository.Create(user);
+        
+        usersRepository.Update(foundUser);
 
         await unitOfWork.Save(cancellationToken);
 
-        return mapper.Map<CreateUserResponse>(user);
+        return mapper.Map<UpdateUserResponse>(foundUser);
     }
 }

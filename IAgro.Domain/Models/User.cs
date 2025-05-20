@@ -8,6 +8,7 @@ public class User : BaseModel
     public required Company Company { get; set; }
 
     public required string Email;
+    public required string Name;
     public required string Password;
     public required UserRole Role;
 }

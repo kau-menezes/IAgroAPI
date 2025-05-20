@@ -1,4 +1,4 @@
-namespace IAgro.Application.Features.Companies.GetAll;
+namespace IAgro.Application.Features.Users.GetAll;
 using IAgro.Domain.Models;
 using AutoMapper;
 
@@ -6,6 +6,6 @@ public class GetAllUsersMapper : Profile
 {
     public GetAllUsersMapper()
     {
-        CreateMap<Company, GetAllCompaniesResponse>();
+        CreateMap<User, GetAllUsersResponse>();
     }
 }

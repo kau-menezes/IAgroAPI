@@ -42,6 +42,7 @@ public static class SeedingExtensions
                     Email = AdminEmail,
                     Password = AdminPassword,
                     Role = UserRole.Admin,
+                    Name = "Admin"
                 };
 
                 PasswordHasher<User> hasher = new();
