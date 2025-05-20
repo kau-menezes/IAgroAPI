@@ -1,5 +1,6 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Fields.Create;
+using IAgro.Application.Features.Fields.Delete;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,12 +49,12 @@ public class FieldController(IMediator mediator) : ControllerBase
     //     return Ok(response);
     // }
     
-    // [HttpDelete, Route("{userId}")]
-    // public async Task<ActionResult<DeleteUserResponse>> Delete(
-    //     [FromRoute] Guid userId, CancellationToken cancellationToken
-    // ) {
-    //     var request = new DeleteUserRequest(userId);
-    //     await mediator.Send(request, cancellationToken);
-    //     return NoContent();
-    // }
+    [HttpDelete, Route("{fieldId}")]
+    public async Task<ActionResult<DeleteFieldResponse>> Delete(
+        [FromRoute] Guid fieldId, CancellationToken cancellationToken
+    ) {
+        var request = new DeleteFieldRequest(fieldId);
+        await mediator.Send(request, cancellationToken);
+        return NoContent();
+    }
 }
