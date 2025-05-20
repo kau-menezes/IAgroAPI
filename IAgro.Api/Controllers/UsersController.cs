@@ -1,5 +1,6 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Users.Create;
+using IAgro.Application.Features.Users.Delete;
 using IAgro.Application.Features.Users.Get;
 using IAgro.Application.Features.Users.GetAll;
 using IAgro.Application.Features.Users.Update;
@@ -44,9 +45,19 @@ public class UsersController(IMediator mediator) : ControllerBase
         [FromRoute] Guid userId,
         UpdateUserRequestProps props,
         CancellationToken cancellationToken
-    ) {
+    )
+    {
         var request = new UpdateUserRequest(userId, props);
         var response = await mediator.Send(request, cancellationToken);
         return Ok(response);
+    }
+    
+    [HttpDelete, Route("{userId}")]
+    public async Task<ActionResult<DeleteUserResponse>> Delete(
+        [FromRoute] Guid userId, CancellationToken cancellationToken
+    ) {
+        var request = new DeleteUserRequest(userId);
+        await mediator.Send(request, cancellationToken);
+        return NoContent();
     }
 }
