@@ -3,6 +3,7 @@ using IAgro.Application.Common.Session;
 using IAgro.Application.Repositories;
 using IAgro.Application.Repositories.CompaniesRepository;
 using IAgro.Application.Repositories.FieldsRepository;
+using IAgro.Domain.Common.Enums;
 using IAgro.Domain.Common.Messages;
 using MediatR;
 
@@ -23,7 +24,7 @@ public class DeleteFieldHandler(
     {
         var sessionData = requestSession.GetSessionOrThrow();
 
-        if(!sessionData.IsAdmin)
+        if(sessionData.Role == UserRole.Reader)
             throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
 
         var field = await fieldsRepository.Get(request.Id, cancellationToken)

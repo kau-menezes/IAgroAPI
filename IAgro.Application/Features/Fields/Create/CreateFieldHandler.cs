@@ -5,6 +5,7 @@ using IAgro.Application.Features.Fields.Create;
 using IAgro.Application.Repositories;
 using IAgro.Application.Repositories.CompaniesRepository;
 using IAgro.Application.Repositories.FieldsRepository;
+using IAgro.Domain.Common.Enums;
 using IAgro.Domain.Common.Messages;
 using IAgro.Domain.Models;
 using MediatR;
@@ -28,9 +29,8 @@ public class CreateFieldHandler(
     {
         var sessionData = requestSession.GetSessionOrThrow();
 
-        // TODO
-        if (!sessionData.IsAdmin)
-            throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
+        if (sessionData.Role == UserRole.Reader)
+            throw new ForbiddenException(ExceptionMessages.Forbidden.Role);
 
         var field = mapper.Map<Field>(request);
 
