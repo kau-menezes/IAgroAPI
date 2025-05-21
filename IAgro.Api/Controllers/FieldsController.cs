@@ -1,6 +1,8 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Fields.Create;
 using IAgro.Application.Features.Fields.Delete;
+using IAgro.Application.Features.Fields.Get;
+using IAgro.Application.Features.Fields.GetByCompany;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,14 +22,23 @@ public class FieldController(IMediator mediator) : ControllerBase
         return Created(APIRoutes.Users, response);
     }
 
-    // [HttpGet, Route("{userId}")]
-    // public async Task<ActionResult<GetUserResponse>> Get(
-    //     [FromRoute] Guid userId, CancellationToken cancellationToken)
-    // {
-    //     var request = new GetUserRequest(userId);
-    //     var response = await mediator.Send(request, cancellationToken);
-    //     return Ok(response);
-    // }
+    [HttpGet, Route("{fieldId}")]
+    public async Task<ActionResult<GetFieldResponse>> Get(
+        [FromRoute] Guid fieldId, CancellationToken cancellationToken)
+    {
+        var request = new GetFieldRequest(fieldId);
+        var response = await mediator.Send(request, cancellationToken);
+        return Ok(response);
+    }
+    
+    [HttpGet, Route("company/{companyId}")]
+    public async Task<ActionResult<GetFieldByCompanyResponse>> GetByCompany(
+        [FromRoute] Guid companyId, CancellationToken cancellationToken)
+    {
+        var request = new GetFieldByCompanyRequest(companyId);
+        var response = await mediator.Send(request, cancellationToken);
+        return Ok(response);
+    }
 
     // [HttpGet]
     // public async Task<ActionResult<GetAllUsersResponse>> GetAll(
@@ -48,7 +59,7 @@ public class FieldController(IMediator mediator) : ControllerBase
     //     var response = await mediator.Send(request, cancellationToken);
     //     return Ok(response);
     // }
-    
+
     [HttpDelete, Route("{fieldId}")]
     public async Task<ActionResult<DeleteFieldResponse>> Delete(
         [FromRoute] Guid fieldId, CancellationToken cancellationToken

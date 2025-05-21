@@ -7,7 +7,7 @@ using MediatR;
 
 namespace IAgro.Application.Features.Companies.Get;
 
-public class GetCompanyHandler(
+public class GetFieldHandler(
     ICompaniesRepository companiesRepository,
     IRequestSession requestSession,
     IMapper mapper
