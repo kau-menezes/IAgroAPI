@@ -2,6 +2,7 @@ using IAgro.API.Enums;
 using IAgro.Application.Features.Fields.Create;
 using IAgro.Application.Features.Fields.Delete;
 using IAgro.Application.Features.Fields.Get;
+using IAgro.Application.Features.Fields.GetAll;
 using IAgro.Application.Features.Fields.GetByCompany;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -40,13 +41,13 @@ public class FieldController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<GetAllUsersResponse>> GetAll(
-    //     CancellationToken cancellationToken)
-    // {
-    //     var response = await mediator.Send(new GetAllUsersRequest(), cancellationToken);
-    //     return Ok(response);
-    // }
+    [HttpGet]
+    public async Task<ActionResult<GetAllFieldsResponse>> GetAll(
+        CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(new GetAllFieldsRequest(), cancellationToken);
+        return Ok(response);
+    }
 
     // [HttpPatch, Route("{userId}")]
     // public async Task<ActionResult<UpdateUserResponse>> Update(
