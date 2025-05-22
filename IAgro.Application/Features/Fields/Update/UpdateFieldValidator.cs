@@ -1,26 +1,21 @@
-// using FluentValidation;
-// using IAgro.Application.Features.Fields.Update;
+using FluentValidation;
 
-// namespace IAgro.Application.Features.Companies.Update;
+namespace IAgro.Application.Features.Fields.Update;
 
-// public class UpdateFieldValidator : AbstractValidator<UpdateFieldRequest>
-// {
-//     public UpdateFieldValidator()
-//     {
-//         RuleFor(c => c.Props.Nickname)
-//             .NotEmpty()
-//             .MinimumLength(2)
-//             .MaximumLength(35)
-//             .When(c => c.Props.Nickname is not null);
+public class UpdateFieldValidator : AbstractValidator<UpdateFieldRequest>
+{
+    public UpdateFieldValidator()
+    {
+        RuleFor(c => c.Props.Nickname)
+            .NotEmpty()
+            .MinimumLength(2)
+            .MaximumLength(35);
 
-//         RuleFor(c => c.Props.Area)
-//             .NotEmpty()
-//             .When(c => c.Props.Area is not null);
+        RuleFor(c => c.Props.Area)
+            .NotEmpty();
 
-//         RuleFor(c => c.Props.Country)
-//             .NotEmpty()
-//             .MinimumLength(2)
-//             .MaximumLength(35)
-//             .When(c => c.Props.Country is not null);
-//     }
-// }
+        RuleFor(c => c.Props.LocationPoints)
+            .NotNull();
+            
+    }
+}

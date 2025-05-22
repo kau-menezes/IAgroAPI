@@ -1,40 +1,41 @@
-// using AutoMapper;
-// using IAgro.Application.Common.Exceptions;
-// using IAgro.Application.Repositories;
-// using IAgro.Application.Repositories.CompaniesRepository;
-// using IAgro.Domain.Common.Messages;
-// using IAgro.Domain.Models;
-// using MediatR;
+using AutoMapper;
+using IAgro.Application.Common.Exceptions;
+using IAgro.Application.Repositories;
+using IAgro.Application.Repositories.FieldsRepository;
+using IAgro.Domain.Common.Messages;
+using IAgro.Domain.Models;
+using MediatR;
 
-// namespace IAgro.Application.Features.Companies.Update;
+namespace IAgro.Application.Features.Fields.Update;
 
-// public class UpdateCompanyHandler(
-//     ICompaniesRepository companiesRepository,
-//     IUnitOfWork unitOfWork,
-//     IMapper mapper
-// ) : IRequestHandler<UpdateCompanyRequest, UpdateCompanyResponse>
-// {
-//     private readonly ICompaniesRepository companiesRepository = companiesRepository;
-//     private readonly IUnitOfWork unitOfWork = unitOfWork;
-//     private readonly IMapper mapper = mapper;
+public class UpdateFieldHandler(
+    IFieldsRepository fieldsRepository,
+    IUnitOfWork unitOfWork,
+    IMapper mapper
+) : IRequestHandler<UpdateFieldRequest, UpdateFieldResponse>
+{
+    private readonly IFieldsRepository fieldsRepository = fieldsRepository;
+    private readonly IUnitOfWork unitOfWork = unitOfWork;
+    private readonly IMapper mapper = mapper;
     
-//     public async Task<UpdateCompanyResponse> Handle(
-//         UpdateCompanyRequest request, CancellationToken cancellationToken)
-//     {
-//         var company = await companiesRepository.Get(request.CompanyId, cancellationToken)
-//             ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
+    public async Task<UpdateFieldResponse> Handle(
+        UpdateFieldRequest request, CancellationToken cancellationToken)
+    {
+        var field = await fieldsRepository.Get(request.FieldId, cancellationToken)
+            ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
 
-//         if (request.Props.Name is string name)
-//             company.Name = name;
-//         if (request.Props.CNPJ is string cnpj)
-//             company.CNPJ = cnpj;
-//         if (request.Props.Country is string country)
-//             company.Country = country;
+        if (request.Props.Nickname is not null)
+            field.Nickname = request.Props.Nickname;
 
-//         companiesRepository.Update(company);
+        field.Area = request.Props.Area;
+        
+        if (request.Props.LocationPoints is not null)
+            field.LocationPoints = request.Props.LocationPoints;
+                  
+        fieldsRepository.Update(field);
 
-//         await unitOfWork.Save(cancellationToken);
+        await unitOfWork.Save(cancellationToken);
 
-//         return mapper.Map<UpdateCompanyResponse>(company);
-//     }
-// }
+        return mapper.Map<UpdateFieldResponse>(field);
+    }
+}

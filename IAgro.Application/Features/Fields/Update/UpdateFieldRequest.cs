@@ -9,8 +9,8 @@ public sealed record UpdateFieldRequest(
 ) : IRequest<UpdateFieldResponse>;
 
 public sealed record UpdateFieldRequestProps(
-    string? Nickname,
-    double? Area,
-    string? Crops,
+    string Nickname,
+    double Area,
+    string Crops,
     List<LocationPoint>? LocationPoints
 );
