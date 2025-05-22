@@ -4,6 +4,7 @@ using IAgro.Application.Features.Fields.Delete;
 using IAgro.Application.Features.Fields.Get;
 using IAgro.Application.Features.Fields.GetAll;
 using IAgro.Application.Features.Fields.GetByCompany;
+using IAgro.Application.Features.Fields.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,17 +50,17 @@ public class FieldController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    // [HttpPatch, Route("{userId}")]
-    // public async Task<ActionResult<UpdateUserResponse>> Update(
-    //     [FromRoute] Guid userId,
-    //     UpdateUserRequestProps props,
-    //     CancellationToken cancellationToken
-    // )
-    // {
-    //     var request = new UpdateUserRequest(userId, props);
-    //     var response = await mediator.Send(request, cancellationToken);
-    //     return Ok(response);
-    // }
+    [HttpPut, Route("{fieldId}")]
+    public async Task<ActionResult<UpdateFieldResponse>> Update(
+        [FromRoute] Guid fieldId,
+        UpdateFieldRequestProps props,
+        CancellationToken cancellationToken
+    )
+    {
+        var request = new UpdateFieldRequest(fieldId, props);
+        var response = await mediator.Send(request, cancellationToken);
+        return Ok(response);
+    }
 
     [HttpDelete, Route("{fieldId}")]
     public async Task<ActionResult<DeleteFieldResponse>> Delete(

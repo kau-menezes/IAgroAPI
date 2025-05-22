@@ -7,7 +7,7 @@ public class UpdateCompanyMapper : Profile
 {
     public UpdateCompanyMapper()
     {
-        CreateMap<UpdateFieldRequest, Company>();
-        CreateMap<Company, UpdateFieldResponse>();
+        CreateMap<UpdateFieldRequest, Field>();
+        CreateMap<Field, UpdateFieldResponse>();
     }
 }
