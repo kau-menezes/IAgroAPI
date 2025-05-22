@@ -27,20 +27,18 @@ public class UpdateUserHandler(
 
     public async Task<UpdateUserResponse> Handle(UpdateUserRequest request, CancellationToken cancellationToken)
     {
-        var session = requestSession.GetSessionOrThrow();
 
         var foundUser = await usersRepository.Get(request.UserId, cancellationToken)
                     ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
 
-        if (request.Props.Email is string email)
-            foundUser.Email = email;
+        if (request.Props.Email is not null)
+            foundUser.Email = request.Props.Email;
 
-        if (request.Props.Password is string password)
-        {
-            foundUser.Password = password;
+        if (request.Props.Password is not null)
             foundUser.Password = passwordHasher.Hash(foundUser);
-        }
-        
+
+        foundUser.Role = request.Props.Role;
+
         usersRepository.Update(foundUser);
 
         await unitOfWork.Save(cancellationToken);

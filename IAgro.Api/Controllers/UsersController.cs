@@ -40,7 +40,7 @@ public class UsersController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpPatch, Route("{userId}")]
+    [HttpPut, Route("{userId}")]
     public async Task<ActionResult<UpdateUserResponse>> Update(
         [FromRoute] Guid userId,
         UpdateUserRequestProps props,
@@ -55,7 +55,8 @@ public class UsersController(IMediator mediator) : ControllerBase
     [HttpDelete, Route("{userId}")]
     public async Task<ActionResult<DeleteUserResponse>> Delete(
         [FromRoute] Guid userId, CancellationToken cancellationToken
-    ) {
+    )
+    {
         var request = new DeleteUserRequest(userId);
         await mediator.Send(request, cancellationToken);
         return NoContent();

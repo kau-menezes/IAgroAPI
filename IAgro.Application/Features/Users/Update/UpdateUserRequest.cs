@@ -10,7 +10,6 @@ public sealed record UpdateUserRequest (
 
 public sealed record UpdateUserRequestProps(
     string Email,
-    string Name,
     string Password,
     UserRole Role
 );
