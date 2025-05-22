@@ -17,7 +17,7 @@ public class UpdateCompanyHandler(
     private readonly ICompaniesRepository companiesRepository = companiesRepository;
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IMapper mapper = mapper;
-    
+
     public async Task<UpdateCompanyResponse> Handle(
         UpdateCompanyRequest request, CancellationToken cancellationToken)
     {
@@ -28,7 +28,15 @@ public class UpdateCompanyHandler(
             company.Name = request.Props.Name;
 
         if (request.Props.CNPJ is not null)
+        {
+
+            var possibleSameCNPJCompany = companiesRepository.GetByCNPJ(request.Props.CNPJ, cancellationToken);
+
+            if (possibleSameCNPJCompany is not null)
+                throw new BadRequestException(details: "There must be only one company with this CNPJ.");
+                
             company.CNPJ = request.Props.CNPJ;
+        }
 
         if (request.Props.Country is not null)
             company.Country = request.Props.Country;
