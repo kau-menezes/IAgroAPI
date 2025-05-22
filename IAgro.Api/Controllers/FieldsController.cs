@@ -4,6 +4,7 @@ using IAgro.Application.Features.Fields.Delete;
 using IAgro.Application.Features.Fields.Get;
 using IAgro.Application.Features.Fields.GetAll;
 using IAgro.Application.Features.Fields.GetByCompany;
+using IAgro.Application.Features.Fields.GetLastScan;
 using IAgro.Application.Features.Fields.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,15 @@ public class FieldController(IMediator mediator) : ControllerBase
         [FromRoute] Guid companyId, CancellationToken cancellationToken)
     {
         var request = new GetFieldByCompanyRequest(companyId);
+        var response = await mediator.Send(request, cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpGet, Route("company/{companyId}/lastScan")]
+    public async Task<ActionResult<GetLastScanResponse>> GetLastScan(
+        [FromRoute] Guid companyId, CancellationToken cancellationToken)
+    {
+        var request = new GetLastScanRequest(companyId);
         var response = await mediator.Send(request, cancellationToken);
         return Ok(response);
     }

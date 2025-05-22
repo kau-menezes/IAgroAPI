@@ -10,6 +10,5 @@ public sealed record GetFieldResponse(
     string Nickname,
     string Crop,
     double Area,
-    List<LocationPoint> LocationPoints,
-    DateTime? LastScan
+    List<LocationPoint> LocationPoints
 );
