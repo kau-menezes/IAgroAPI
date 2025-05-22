@@ -24,12 +24,14 @@ public class UpdateCompanyHandler(
         var company = await companiesRepository.Get(request.CompanyId, cancellationToken)
             ?? throw new NotFoundException(ExceptionMessages.NotFound.Company);
 
-        if (request.Props.Name is string name)
-            company.Name = name;
-        if (request.Props.CNPJ is string cnpj)
-            company.CNPJ = cnpj;
-        if (request.Props.Country is string country)
-            company.Country = country;
+        if (request.Props.Name is not null)
+            company.Name = request.Props.Name;
+
+        if (request.Props.CNPJ is not null)
+            company.CNPJ = request.Props.CNPJ;
+
+        if (request.Props.Country is not null)
+            company.Country = request.Props.Country;
 
         companiesRepository.Update(company);
 

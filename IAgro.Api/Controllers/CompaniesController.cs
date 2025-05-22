@@ -23,7 +23,7 @@ public class CompaniesController(IMediator mediator) : ControllerBase
         return Created(APIRoutes.Companies, response);
     }
 
-    [HttpPatch, Route("{companyId}")]
+    [HttpPut, Route("{companyId}")]
     public async Task<ActionResult<UpdateCompanyResponse>> Update(
         [FromRoute] Guid companyId,
         UpdateCompanyRequestProps props,

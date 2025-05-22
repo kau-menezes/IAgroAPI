@@ -15,4 +15,10 @@ public class CompaniesRepository(
             .Include(c => c.Users)
             .Include(c => c.Fields)
             .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+
+    public Task<Company?> GetByCNPJ(string cnpj, CancellationToken cancellationToken)
+    => context.Set<Company>()
+        .Where(c => c.DeletedAt == null)
+        .Where(c => c.CNPJ == cnpj)
+        .FirstOrDefaultAsync(cancellationToken);
 }

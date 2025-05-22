@@ -11,6 +11,6 @@ public class Field : BaseModel
     public required double Area { get; set; }
     public required string Crop { get; set; }
 
-    public List<LocationPoint> LocationPoints { get; } = [];
+    public List<LocationPoint> LocationPoints { get; set; } = [];
     public List<FieldScan> FieldScans { get; } = [];
 }

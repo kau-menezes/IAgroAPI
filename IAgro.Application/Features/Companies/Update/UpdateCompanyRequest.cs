@@ -8,7 +8,7 @@ public sealed record UpdateCompanyRequest(
 ) : IRequest<UpdateCompanyResponse>;
 
 public sealed record UpdateCompanyRequestProps(
-    string? Name,
-    string? CNPJ,
-    string? Country
+    string Name,
+    string CNPJ,
+    string Country
 );
