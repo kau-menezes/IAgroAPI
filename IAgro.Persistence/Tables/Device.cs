@@ -16,6 +16,19 @@ public static class DeviceTableExtensions
             entity.Property(e => e.Nickname)
                 .HasColumnName("nickname")
                 .HasColumnType("varchar(35)");
+
+            entity.Property(e => e.Code)
+                .HasColumnName("code")
+                .HasColumnType("varchar(50)");
+
+            entity.Property(e => e.CompanyId)
+                .HasColumnName("company_id")
+                .IsRequired();
+
+            entity.HasOne(e => e.Company)
+                .WithMany(c => c.Devices)
+                .HasForeignKey(e => e.CompanyId);
+
         });
     }
 }

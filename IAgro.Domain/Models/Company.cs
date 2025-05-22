@@ -8,4 +8,5 @@ public class Company : BaseModel
 
     public List<User> Users { get; } = [];
     public List<Field> Fields { get; } = [];
+    public List<Device> Devices { get; set; } = [];
 }
