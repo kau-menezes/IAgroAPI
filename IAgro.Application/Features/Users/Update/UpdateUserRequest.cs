@@ -9,8 +9,8 @@ public sealed record UpdateUserRequest (
 ) : IRequest<UpdateUserResponse>;
 
 public sealed record UpdateUserRequestProps(
-    string? Email,
-    string? Name,
-    string? Password,
-    UserRole? Role
+    string Email,
+    string Name,
+    string Password,
+    UserRole Role
 );
