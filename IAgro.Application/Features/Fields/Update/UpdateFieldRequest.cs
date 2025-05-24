@@ -12,5 +12,5 @@ public sealed record UpdateFieldRequestProps(
     string Nickname,
     double Area,
     string Crop,
-    List<LocationPoint>? LocationPoints
+    List<LocationPoint> LocationPoints
 );
