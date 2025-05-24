@@ -22,8 +22,7 @@ public static class DeviceTableExtensions
                 .HasColumnType("varchar(50)");
 
             entity.Property(e => e.CompanyId)
-                .HasColumnName("company_id")
-                .IsRequired();
+                .HasColumnName("company_id");
 
             entity.HasOne(e => e.Company)
                 .WithMany(c => c.Devices)

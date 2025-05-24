@@ -15,7 +15,6 @@ public class UpdateFieldValidator : AbstractValidator<UpdateFieldRequest>
             .NotEmpty();
 
         RuleFor(c => c.Props.LocationPoints)
-            .NotNull();
-            
+            .Must(lp => lp.Count < 10);
     }
 }
