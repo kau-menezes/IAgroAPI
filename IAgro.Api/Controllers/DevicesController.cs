@@ -1,6 +1,7 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Devices.CheckExistence;
 using IAgro.Application.Features.Devices.GetAll;
+using IAgro.Application.Features.Devices.GetByCompany;
 using IAgro.Application.Features.Devices.SignalExistence;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,15 @@ public class DeviceController(IMediator mediator) : ControllerBase
         CancellationToken cancellationToken)
     {
         var response = await mediator.Send(new GetAllDevicesRequest(), cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpGet, Route("/company/{companyId}")]
+    public async Task<ActionResult<GetByCompanyResponse>> GetAll(
+        [FromRoute] Guid companyId,
+        CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(new GetByCompanyRequest(companyId), cancellationToken);
         return Ok(response);
     }
 
