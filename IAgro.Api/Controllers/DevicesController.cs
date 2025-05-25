@@ -1,5 +1,6 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Devices.CheckExistence;
+using IAgro.Application.Features.Devices.CreateConnection;
 using IAgro.Application.Features.Devices.GetAll;
 using IAgro.Application.Features.Devices.GetByCompany;
 using IAgro.Application.Features.Devices.SignalExistence;
@@ -27,6 +28,14 @@ public class DeviceController(IMediator mediator) : ControllerBase
     [HttpPost, Route("signal")]
     public async Task<ActionResult<SignalExistenceResponse>> SignalExistence(
         SignalExistenceRequest request, CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(request, cancellationToken);
+        return Created(APIRoutes.Devices, response);
+    }
+
+    [HttpPost, Route("connect")]
+    public async Task<ActionResult<CreateConnectionResponse>> CreateConnection(
+        CreateConnectionRequest request, CancellationToken cancellationToken)
     {
         var response = await mediator.Send(request, cancellationToken);
         return Created(APIRoutes.Devices, response);
