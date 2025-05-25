@@ -7,5 +7,5 @@ public sealed record GetAllDevicesResponse(
     DateTime? DeletedAt,
     string? Nickname,
     string Code,
-    Guid CompanyId
+    Guid? CompanyId
 );
