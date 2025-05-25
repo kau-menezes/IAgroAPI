@@ -1,6 +1,7 @@
 using IAgro.API.Enums;
 using IAgro.Application.Features.Devices.CheckExistence;
 using IAgro.Application.Features.Devices.CreateConnection;
+using IAgro.Application.Features.Devices.DeleteConnection;
 using IAgro.Application.Features.Devices.GetAll;
 using IAgro.Application.Features.Devices.GetByCompany;
 using IAgro.Application.Features.Devices.SignalExistence;
@@ -16,7 +17,7 @@ public class DeviceController(IMediator mediator) : ControllerBase
     private readonly IMediator mediator = mediator;
 
     [HttpGet, Route("{deviceCode}")]
-    public async Task<ActionResult<CheckExisteneceResponse>> SignalExistence(
+    public async Task<ActionResult<CheckExisteneceResponse>> CheckExistence(
         [FromRoute] string deviceCode,
         CancellationToken cancellationToken)
     {
@@ -49,12 +50,21 @@ public class DeviceController(IMediator mediator) : ControllerBase
         return Ok(response);
     }
 
-    [HttpGet, Route("/company/{companyId}")]
-    public async Task<ActionResult<GetByCompanyResponse>> GetAll(
+    [HttpGet, Route("company/{companyId}")]
+    public async Task<ActionResult<GetByCompanyResponse>> GetByCompany(
         [FromRoute] Guid companyId,
         CancellationToken cancellationToken)
     {
         var response = await mediator.Send(new GetByCompanyRequest(companyId), cancellationToken);
+        return Ok(response);
+    }
+
+    [HttpDelete, Route("disconnect")]
+    public async Task<ActionResult<DeleteConnectionResponse>> GetAll(
+        DeleteConnectionRequest request,
+        CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 
