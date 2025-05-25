@@ -8,12 +8,12 @@ using MediatR;
 namespace IAgro.Application.Features.Companies.Get;
 
 public class GetFieldHandler(
-    ICompaniesRepository companiesRepository,
+    IDeviceRepository companiesRepository,
     IRequestSession requestSession,
     IMapper mapper
 ) : IRequestHandler<GetCompanyRequest, GetCompanyResponse>
 {
-    private readonly ICompaniesRepository companiesRepository = companiesRepository;
+    private readonly IDeviceRepository companiesRepository = companiesRepository;
     private readonly IRequestSession requestSession = requestSession;
     private readonly IMapper mapper = mapper;
 

@@ -9,12 +9,12 @@ using MediatR;
 namespace IAgro.Application.Features.Companies.Update;
 
 public class UpdateCompanyHandler(
-    ICompaniesRepository companiesRepository,
+    IDeviceRepository companiesRepository,
     IUnitOfWork unitOfWork,
     IMapper mapper
 ) : IRequestHandler<UpdateCompanyRequest, UpdateCompanyResponse>
 {
-    private readonly ICompaniesRepository companiesRepository = companiesRepository;
+    private readonly IDeviceRepository companiesRepository = companiesRepository;
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     private readonly IMapper mapper = mapper;
 

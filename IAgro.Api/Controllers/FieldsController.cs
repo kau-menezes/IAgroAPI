@@ -22,7 +22,7 @@ public class FieldController(IMediator mediator) : ControllerBase
         CreateFieldRequest request, CancellationToken cancellationToken)
     {
         var response = await mediator.Send(request, cancellationToken);
-        return Created(APIRoutes.Users, response);
+        return Created(APIRoutes.Fields, response);
     }
 
     [HttpGet, Route("{fieldId}")]

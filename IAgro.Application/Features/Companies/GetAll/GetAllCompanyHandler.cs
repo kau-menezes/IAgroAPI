@@ -7,13 +7,13 @@ using IAgro.Domain.Common.Messages;
 
 namespace IAgro.Application.Features.Companies.GetAll;
 
-public class GetAllCompaniesHandler(
-    ICompaniesRepository companiesRepository,
+public class GetAllDevicesHandler(
+    IDeviceRepository companiesRepository,
     IRequestSession requestSession,
     IMapper mapper
 ) : IRequestHandler<GetAllCompaniesRequest, List<GetAllCompaniesResponse>>
 {
-    private readonly ICompaniesRepository companiesRepository = companiesRepository;
+    private readonly IDeviceRepository companiesRepository = companiesRepository;
     private readonly IRequestSession requestSession = requestSession;
     private readonly IMapper mapper = mapper;
 

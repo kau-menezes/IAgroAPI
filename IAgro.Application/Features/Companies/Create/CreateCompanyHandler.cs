@@ -29,7 +29,7 @@ public class CreateCompanyHandler(
         if(!sessionData.IsAdmin)
             throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
 
-        var possibleSameCNPJCompany = companiesRepository.GetByCNPJ(request.CNPJ, cancellationToken);
+        var possibleSameCNPJCompany = await companiesRepository.GetByCNPJ(request.CNPJ, cancellationToken);
 
         if (possibleSameCNPJCompany is not null)
             throw new BadRequestException(details: "There must be only one company with this CNPJ.");
