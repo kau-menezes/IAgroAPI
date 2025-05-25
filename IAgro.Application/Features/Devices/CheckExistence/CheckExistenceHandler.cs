@@ -21,7 +21,7 @@ public class CheckExistenceHandler(
     public async Task<CheckExisteneceResponse> Handle(
         CheckExistenceRequest request, CancellationToken cancellationToken)
     {
-        var foundDevice = await deviceRepository  .GetByCoded(request.Code, cancellationToken);        
+        var foundDevice = await deviceRepository  .GetByCode(request.Code, cancellationToken);        
         return mapper.Map<CheckExisteneceResponse>(foundDevice);
     }
 }
