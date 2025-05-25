@@ -8,12 +8,12 @@ using MediatR;
 namespace IAgro.Application.Features.Companies.Delete;
 
 public class DeleteCompanyHandler(
-    IDeviceRepository companiesRepository,
+    ICompaniesRepository companiesRepository,
     IRequestSession requestSession,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<DeleteCompanyRequest, DeleteCompanyResponse>
 {
-    private readonly IDeviceRepository companiesRepository = companiesRepository;
+    private readonly ICompaniesRepository companiesRepository = companiesRepository;
     private readonly IRequestSession requestSession = requestSession;
     private readonly IUnitOfWork unitOfWork = unitOfWork;
     

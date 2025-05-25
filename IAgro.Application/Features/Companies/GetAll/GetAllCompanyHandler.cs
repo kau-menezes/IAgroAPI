@@ -8,12 +8,12 @@ using IAgro.Domain.Common.Messages;
 namespace IAgro.Application.Features.Companies.GetAll;
 
 public class GetAllDevicesHandler(
-    IDeviceRepository companiesRepository,
+    ICompaniesRepository companiesRepository,
     IRequestSession requestSession,
     IMapper mapper
 ) : IRequestHandler<GetAllCompaniesRequest, List<GetAllCompaniesResponse>>
 {
-    private readonly IDeviceRepository companiesRepository = companiesRepository;
+    private readonly ICompaniesRepository companiesRepository = companiesRepository;
     private readonly IRequestSession requestSession = requestSession;
     private readonly IMapper mapper = mapper;
 
