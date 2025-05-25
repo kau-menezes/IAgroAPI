@@ -3,9 +3,9 @@ using AutoMapper;
 
 namespace IAgro.Application.Features.Devices.SignalExistence;
 
-public class SignalExistenceMapper : Profile
+public class CheckExistenceMapper : Profile
 {
-    public SignalExistenceMapper()
+    public CheckExistenceMapper()
     {
         CreateMap<SignalExistenceRequest, Device>();
         CreateMap<Device, SignalExistenceResponse>();

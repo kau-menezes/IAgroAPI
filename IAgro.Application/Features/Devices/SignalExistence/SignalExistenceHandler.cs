@@ -10,7 +10,7 @@ using MediatR;
 
 namespace IAgro.Application.Features.Devices.SignalExistence;
 
-public class SignalExistenceHandler(
+public class CheckExistenceHandler(
     IDevicesRepository deviceRepository,
     IRequestSession requestSession,
     IUnitOfWork unitOfWork,
@@ -26,6 +26,8 @@ public class SignalExistenceHandler(
         SignalExistenceRequest request, CancellationToken cancellationToken)
     {
         var newDevice = mapper.Map<Device>(request);
+
+        deviceRepository.Create(newDevice);
 
         await unitOfWork.Save(cancellationToken);
         
