@@ -7,7 +7,7 @@ using NetTopologySuite.Geometries;
 namespace IAgro.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,9 @@ namespace IAgro.Persistence.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
+                    company_id = table.Column<Guid>(type: "uuid", nullable: true),
                     nickname = table.Column<string>(type: "varchar(35)", nullable: true),
+                    code = table.Column<string>(type: "varchar(50)", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamptz", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamptz", nullable: false),
                     deleted_at = table.Column<DateTime>(type: "timestamptz", nullable: true)
@@ -45,6 +47,11 @@ namespace IAgro.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_devices", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_devices_companies_company_id",
+                        column: x => x.company_id,
+                        principalTable: "companies",
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +164,11 @@ namespace IAgro.Persistence.Migrations
                 name: "IX_crop_diseases_field_scan_id",
                 table: "crop_diseases",
                 column: "field_scan_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_devices_company_id",
+                table: "devices",
+                column: "company_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_field_scans_field_id",

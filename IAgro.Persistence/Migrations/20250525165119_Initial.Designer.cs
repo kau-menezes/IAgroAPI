@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IAgro.Persistence.Migrations
 {
     [DbContext(typeof(IAgroContext))]
-    [Migration("20250524221026_DeviceUpdate")]
-    partial class DeviceUpdate
+    [Migration("20250525165119_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
