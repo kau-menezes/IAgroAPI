@@ -5,10 +5,11 @@ namespace IAgro.Application.Features.FieldScans.Scan;
 
 public sealed record ScanResponse(
     Guid Id,
-    Guid Code,
     DateTime CreatedAt,
     DateTime UpdatedAt,
     DateTime? DeletedAt,
+    DateTime StartedAt,
+    Guid DeviceId,
     Guid FieldId,
-    List<CropDisease> CropDiseases
+    List<CropDisease> CropDiseasesFound
 );

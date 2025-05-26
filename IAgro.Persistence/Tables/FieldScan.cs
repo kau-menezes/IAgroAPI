@@ -21,6 +21,11 @@ public static class FieldScanTableExtensions
                 .HasColumnName("field_id")
                 .IsRequired();
 
+            entity.Property(e => e.StartedAt)
+                .HasColumnName("started_at")
+                .HasColumnType("timestamptz")
+                .IsRequired();
+
             entity.HasOne(e => e.Device)
                 .WithMany(d => d.FieldScans)
                 .HasForeignKey(e => e.DeviceId);
