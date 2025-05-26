@@ -9,4 +9,7 @@ public class Device : BaseModel
     public string? Nickname { get; set; }
 
     public required string Code { get; set; }
+
+    public List<FieldScan> FieldScans { get; set; } = [];
+
 }

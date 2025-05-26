@@ -3,9 +3,9 @@ using AutoMapper;
 
 namespace IAgro.Application.Features.Fields.Create;
 
-public class CreateFieldMapper : Profile
+public class ScanMapper : Profile
 {
-    public CreateFieldMapper()
+    public ScanMapper()
     {
         CreateMap<CreateFieldRequest, Field>();
         CreateMap<Field, CreateFieldResponse>();

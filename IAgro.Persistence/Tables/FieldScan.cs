@@ -13,12 +13,22 @@ public static class FieldScanTableExtensions
 
             entity.ConfigureBaseTableProps();
 
-            entity.Property(e => e.FieldId)
-                .HasColumnName("field_id")
-                .IsRequired();
             entity.HasOne(e => e.Field)
                 .WithMany(f => f.FieldScans)
                 .HasForeignKey(e => e.FieldId);
+
+            entity.Property(e => e.FieldId)
+                .HasColumnName("field_id")
+                .IsRequired();
+
+            entity.HasOne(e => e.Device)
+                .WithMany(d => d.FieldScans)
+                .HasForeignKey(e => e.DeviceId);
+
+            entity.Property(e => e.DeviceId)
+                .HasColumnName("device_id")
+                .IsRequired();
+                
         });
     }
 }

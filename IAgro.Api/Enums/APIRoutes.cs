@@ -7,4 +7,5 @@ public static class APIRoutes
     public const string Users = "api/users";
     public const string Fields = "api/fields";
     public const string Devices = "api/devices";
+    public const string FieldScans = "api/scans";
 }
