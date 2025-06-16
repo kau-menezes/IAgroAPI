@@ -1,4 +1,5 @@
 using AutoMapper;
+using IAgro.Application.Common.Exceptions;
 using IAgro.Application.Common.Session;
 using IAgro.Application.Repositories;
 using IAgro.Application.Repositories.DevicesRepository;
@@ -21,7 +22,9 @@ public class CheckExistenceHandler(
     public async Task<CheckExisteneceResponse> Handle(
         CheckExistenceRequest request, CancellationToken cancellationToken)
     {
-        var foundDevice = await deviceRepository  .GetByCode(request.Code, cancellationToken);        
+        var foundDevice = await deviceRepository.GetByCode(request.Code, cancellationToken)
+            ?? throw new NotFoundException("Device Not Found."); 
+
         return mapper.Map<CheckExisteneceResponse>(foundDevice);
     }
 }

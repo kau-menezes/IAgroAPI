@@ -6,5 +6,6 @@ public sealed record CheckExisteneceResponse
     DateTime CreatedAt,
     DateTime UpdatedAt,
     DateTime? DeletedAt,
-    string Code
+    string Code,
+    Guid? CompanyId
 );
