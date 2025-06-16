@@ -19,7 +19,7 @@ public static class DeviceTableExtensions
 
             entity.Property(e => e.Code)
                 .HasColumnName("code")
-                .HasColumnType("varchar(50)");
+                .HasColumnType("varchar(128)");
 
             entity.Property(e => e.CompanyId)
                 .HasColumnName("company_id");
