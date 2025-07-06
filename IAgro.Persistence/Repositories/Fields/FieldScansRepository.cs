@@ -13,4 +13,12 @@ public class FieldScansRepository(IAgroContext context)
             .Where(fs => fs.DeletedAt == null && fs.FieldId == fieldId)
             .OrderByDescending(fs => fs.CreatedAt)
             .FirstOrDefaultAsync(cancellationToken);
+
+    public Task<List<FieldScan>> GetByCompany(Guid companyId, CancellationToken cancellationToken)
+        => context.Set<FieldScan>()
+            .Where(fs => fs.DeletedAt == null)
+            .Where(fs => fs.Field.CompanyId == companyId)
+            .Include(fs => fs.CropDiseases)
+            .Include(fs => fs.Field)
+            .ToListAsync(cancellationToken);
 }

@@ -12,7 +12,7 @@ namespace IAgro.Application.Features.FieldScans.Scan;
 
 public class ScanHandler(
     IFieldScansRepository fieldScanRepository,
-    IRequestSession requestSession,
+    // IRequestSession requestSession,
     IUnitOfWork unitOfWork,
     IMapper mapper
 ) : IRequestHandler<ScanRequest, ScanResponse>
@@ -20,7 +20,7 @@ public class ScanHandler(
     public async Task<ScanResponse> Handle(
         ScanRequest request, CancellationToken cancellationToken)
     {
-        requestSession.GetSessionOrThrow();
+        // requestSession.GetSessionOrThrow();
 
         var fieldScan = mapper.Map<FieldScan>(request);
         var cropDiseases = request.CropDiseasesFound.Select(x => new CropDisease()

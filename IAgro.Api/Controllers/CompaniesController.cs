@@ -3,6 +3,7 @@ using IAgro.Application.Features.Companies.Create;
 using IAgro.Application.Features.Companies.Delete;
 using IAgro.Application.Features.Companies.Get;
 using IAgro.Application.Features.Companies.GetAll;
+using IAgro.Application.Features.Companies.Insights;
 using IAgro.Application.Features.Companies.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,14 @@ namespace IAgro.API.Controllers;
 public class CompaniesController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator mediator = mediator;
+
+    [HttpGet, Route("{companyId}/insights")]
+    public async Task<ActionResult<CompanyInsightsResponse>> Insights(
+        [FromRoute] Guid companyId, CancellationToken cancellationToken)
+    {
+        var response = await mediator.Send(new CompanyInsightsRequest(companyId), cancellationToken);
+        return Ok(response);
+    }
 
     [HttpPost]
     public async Task<ActionResult<CreateCompanyResponse>> Create(
@@ -28,7 +37,8 @@ public class CompaniesController(IMediator mediator) : ControllerBase
         [FromRoute] Guid companyId,
         UpdateCompanyRequestProps props,
         CancellationToken cancellationToken
-    ) {
+    )
+    {
         var request = new UpdateCompanyRequest(companyId, props);
         var response = await mediator.Send(request, cancellationToken);
         return Ok(response);
@@ -37,7 +47,8 @@ public class CompaniesController(IMediator mediator) : ControllerBase
     [HttpDelete, Route("{companyId}")]
     public async Task<ActionResult<DeleteCompanyResponse>> Delete(
         [FromRoute] Guid companyId, CancellationToken cancellationToken
-    ) {
+    )
+    {
         var request = new DeleteCompanyRequest(companyId);
         await mediator.Send(request, cancellationToken);
         return NoContent();
