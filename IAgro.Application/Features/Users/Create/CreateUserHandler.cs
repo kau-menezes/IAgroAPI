@@ -29,19 +29,15 @@ public class UpdateUserHandler(
     {
         var session = requestSession.GetSessionOrThrow();
 
-        switch (session.Role)
+        var role = session.Role switch
         {
-            case UserRole.Reader:
-                throw new ForbiddenException(ExceptionMessages.Forbidden.Role);
-            case UserRole.Manager:
-                if (request.Role == UserRole.Admin || request.CompanyId != session.UserCompanyId)
-                    throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
-                break;
-            case UserRole.Admin:
-                break;
-        }
+            UserRole.Admin => UserRole.Manager,
+            UserRole.Manager => UserRole.Reader, 
+            _ => throw new ForbiddenException(ExceptionMessages.Forbidden.Role),
+        };
 
         var user = mapper.Map<User>(request);
+        user.Role = role;
         user.Password = passwordHasher.Hash(user);
 
         usersRepository.Create(user);

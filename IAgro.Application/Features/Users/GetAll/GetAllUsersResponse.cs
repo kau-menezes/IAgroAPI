@@ -1,4 +1,5 @@
 using IAgro.Domain.Common.Enums;
+using IAgro.Domain.Models;
 
 namespace IAgro.Application.Features.Users.GetAll;
 
@@ -7,7 +8,7 @@ public sealed record GetAllUsersResponse(
     DateTime CreatedAt,
     DateTime UpdatedAt,
     DateTime? DeletedAt,
-    Guid CompanyId,
+    Company Company,
     UserRole Role,
     string Email
 );
