@@ -20,6 +20,7 @@ public static class UserTableExtensions
             entity.HasOne(e => e.Company)
                 .WithMany(c => c.Users)
                 .HasForeignKey(e => e.CompanyId);
+            entity.Navigation(u => u.Company).AutoInclude();
 
             entity.Property(e => e.Email)
                 .HasColumnName("email")

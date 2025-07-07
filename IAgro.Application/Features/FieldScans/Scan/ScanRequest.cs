@@ -4,7 +4,7 @@ using MediatR;
 namespace IAgro.Application.Features.FieldScans.Scan;
 
 public sealed record ScanRequest(
-    Guid DeviceId,
+    string DeviceCode, // Changed from Guid DeviceId to string DeviceCode
     Guid FieldId,
     DateTime StartedAt,
     List<CropDiseasesRequest> CropDiseasesFound

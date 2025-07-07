@@ -12,6 +12,7 @@ namespace IAgro.Application.Features.FieldScans.Scan;
 
 public class ScanHandler(
     IFieldScansRepository fieldScanRepository,
+    IDevicesRepository devicesRepository, // Added devicesRepository
     // IRequestSession requestSession,
     IUnitOfWork unitOfWork,
     IMapper mapper
@@ -22,11 +23,22 @@ public class ScanHandler(
     {
         // requestSession.GetSessionOrThrow();
 
+        // Lookup device by code
+        var device = await devicesRepository.GetByCode(request.DeviceCode, cancellationToken);
+        if (device is null)
+            throw new NotFoundException($"Device with code '{request.DeviceCode}' not found.");
+
         var fieldScan = mapper.Map<FieldScan>(request);
+        fieldScan.DeviceId = device.Id; // Set DeviceId from found device
+        fieldScan.Device = device;
+
+        // Ensure StartedAt is UTC
+        fieldScan.StartedAt = DateTime.SpecifyKind(fieldScan.StartedAt, DateTimeKind.Utc);
+
         var cropDiseases = request.CropDiseasesFound.Select(x => new CropDisease()
         {
             Disease = x.Disease,
-            DetectedAt = x.DetectedAt,
+            DetectedAt = DateTime.SpecifyKind(x.DetectedAt, DateTimeKind.Utc), // Ensure UTC
             LocationPoint = x.LocationPoint,   
             FieldScan = fieldScan,
             FieldScanId = fieldScan.Id,

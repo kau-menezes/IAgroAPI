@@ -4,6 +4,7 @@ using IAgro.Application.Common.Session;
 using IAgro.Application.Common.Exceptions;
 using IAgro.Domain.Common.Messages;
 using IAgro.Application.Repositories.UsersRepository;
+using IAgro.Domain.Common.Enums;
 
 namespace IAgro.Application.Features.Users.GetAll;
 
@@ -22,13 +23,13 @@ public class GetAllUsersHandler(
     {
         var session = requestSession.GetSessionOrThrow();
 
-
-        if (!session.IsAdmin)
-            throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
-
-        var users = await usersRepository.GetAll(cancellationToken);
+        var users = session.Role switch
+        {
+            UserRole.Manager => await usersRepository.GetByCompany(session.UserCompanyId, cancellationToken),
+            UserRole.Admin => await usersRepository.GetManagers(cancellationToken),
+            _ => [(await usersRepository.Get(session.UserId, cancellationToken))!],
+        };
 
         return mapper.Map<List<GetAllUsersResponse>>(users);
-
     }
 }

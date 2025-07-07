@@ -9,7 +9,7 @@ public sealed record ScanResponse(
     DateTime UpdatedAt,
     DateTime? DeletedAt,
     DateTime StartedAt,
-    Guid DeviceId,
+    string DeviceCode, // Changed from Guid DeviceId to string DeviceCode
     Guid FieldId,
     List<CropDisease> CropDiseasesFound
 );

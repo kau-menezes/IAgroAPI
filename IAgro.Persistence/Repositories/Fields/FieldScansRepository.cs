@@ -21,4 +21,11 @@ public class FieldScansRepository(IAgroContext context)
             .Include(fs => fs.CropDiseases)
             .Include(fs => fs.Field)
             .ToListAsync(cancellationToken);
+
+    public Task<List<FieldScan>> GetByFieldId(Guid fieldId, CancellationToken cancellationToken)
+        => context.Set<FieldScan>()
+            .Where(fs => fs.DeletedAt == null && fs.FieldId == fieldId)
+            .Include(fs => fs.CropDiseases)
+            .Include(fs => fs.Device)
+            .ToListAsync(cancellationToken);
 }

@@ -8,6 +8,8 @@ public class ScanMapper : Profile
     public ScanMapper()
     {
         CreateMap<ScanRequest, FieldScan>();
-        CreateMap<FieldScan, ScanResponse>();
+        CreateMap<FieldScan, ScanResponse>()
+            .ForCtorParam("DeviceCode", opt => opt.MapFrom(src => src.Device.Code))
+            .ForCtorParam("CropDiseasesFound", opt => opt.MapFrom(src => src.CropDiseases));
     }
 }

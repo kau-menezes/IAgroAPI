@@ -20,10 +20,7 @@ public class GetAllDevicesHandler(
     public async Task<List<GetAllCompaniesResponse>> Handle(
         GetAllCompaniesRequest request, CancellationToken cancellationToken)
     {
-        var session = requestSession.GetSessionOrThrow();
-
-        if(!session.IsAdmin)
-            throw new ForbiddenException(ExceptionMessages.Forbidden.Admin);
+        requestSession.GetSessionOrThrow();
 
         var companies = await companiesRepository.GetAll(cancellationToken);
 
